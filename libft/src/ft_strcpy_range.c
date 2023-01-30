@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   ft_strcpy_range.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahernan <jahernan@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 12:43:49 by jahernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:37:32 by jahernan         ###   ########.fr       */
+/*   Created: 2023/01/30 19:58:46 by jahernan          #+#    #+#             */
+/*   Updated: 2023/01/30 20:55:04 by jahernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include <stdlib.h>
 
-# define T_LEAF 0
-# define T_OR 1
-# define T_AND 2
+char	*ft_strcpy_range(char *str, int i, int j)
+{
+	char	*copy;
+	int		k;
 
-typedef struct s_cmdtree {
-	int					type;
-	int					rc;
-	struct s_cmdtree	*children;
-	char				*cmd;
-}	t_cmdtree;
-
-t_cmdtree	*ft_build_cmdtree(char *cmd);
-#endif
+	copy = malloc(j - i);
+	k = 0;
+	while (i < j)
+	{
+		copy[k] = str[i];
+		k++;
+		i++;
+	}
+	copy[k] = '\0';
+	return (copy);
+}

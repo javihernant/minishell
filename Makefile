@@ -1,17 +1,28 @@
-SRC=*.c
 NAME=minishell
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -g
-LIBS=-lreadline
+LFLAGS=-L./libft
+IFLAGS=-I./libft/include
+LIBS=-lreadline -lft
 COMPILED_OBJS=$(shell find . -name '*.o')
+SRC:=$(shell find . -name '*.c')
+OBJ=$(SRC:.c=.o)
 
-$(NAME): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME) $(LIBS)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME) $(LIBS) $(DBG)
 
-clean:
-	rm -rf $(COMPILED_OBJS)
+%.o:%.c
+	$(CC) $(CFLAGS) $(IFLAGS) -o3 -c $< -o $@ $(DBG)
+
+$(LIBFT):
+	$(MAKE) -C ./libft
 
 fclean: clean
+	$(MAKE) fclean -C ./libft
 	rm -rf $(NAME)
+
+clean:
+	$(MAKE) clean -C ./libft
+	rm -rf $(COMPILED_OBJS)
 
 re: fclean $(NAME)

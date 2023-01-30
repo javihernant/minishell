@@ -1,28 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahernan <jahernan@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 12:43:49 by jahernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:37:32 by jahernan         ###   ########.fr       */
+/*   Created: 2023/01/30 19:43:43 by jahernan          #+#    #+#             */
+/*   Updated: 2023/01/30 19:48:21 by jahernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
-
-# define T_LEAF 0
-# define T_OR 1
-# define T_AND 2
-
-typedef struct s_cmdtree {
-	int					type;
-	int					rc;
-	struct s_cmdtree	*children;
-	char				*cmd;
-}	t_cmdtree;
-
-t_cmdtree	*ft_build_cmdtree(char *cmd);
-#endif
+int	ft_isspace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r');
+}

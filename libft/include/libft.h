@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahernan <jahernan@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 12:43:49 by jahernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:37:32 by jahernan         ###   ########.fr       */
+/*   Created: 2022/09/20 13:48:42 by jahernan          #+#    #+#             */
+/*   Updated: 2023/01/30 20:06:23 by jahernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef LIBFT_H
+# define LIBFT_H
 
-# define T_LEAF 0
-# define T_OR 1
-# define T_AND 2
+# include <sys/types.h>
 
-typedef struct s_cmdtree {
-	int					type;
-	int					rc;
-	struct s_cmdtree	*children;
-	char				*cmd;
-}	t_cmdtree;
-
-t_cmdtree	*ft_build_cmdtree(char *cmd);
+char	*ft_strcpy_range(char *str, int i, int j);
+int		ft_isspace(char c);
+int		ft_strlen(char *str);
+int		ft_min(int a, int b);
 #endif

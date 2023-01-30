@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jahernan <jahernan@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 12:43:49 by jahernan          #+#    #+#             */
-/*   Updated: 2023/01/30 20:37:32 by jahernan         ###   ########.fr       */
+/*   Created: 2022/09/20 16:22:10 by jahernan          #+#    #+#             */
+/*   Updated: 2023/01/30 20:02:55 by jahernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <sys/types.h>
 
-#ifndef TYPES_H
-# define TYPES_H
+int	ft_strlen(const char *s)
+{
+	int	i;
 
-# define T_LEAF 0
-# define T_OR 1
-# define T_AND 2
-
-typedef struct s_cmdtree {
-	int					type;
-	int					rc;
-	struct s_cmdtree	*children;
-	char				*cmd;
-}	t_cmdtree;
-
-t_cmdtree	*ft_build_cmdtree(char *cmd);
-#endif
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
