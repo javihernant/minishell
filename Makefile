@@ -3,10 +3,13 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror -g
 LFLAGS=-L./libft
 IFLAGS=-I./libft/include
+LIBFT=libft/libft.a
 LIBS=-lreadline -lft
 COMPILED_OBJS=$(shell find . -name '*.o')
-SRC:=$(shell find . -name '*.c')
+SRC:=$(shell find . -maxdepth 1 -name '*.c')
 OBJ=$(SRC:.c=.o)
+
+all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(CFLAGS) $(LFLAGS) $(OBJ) -o $(NAME) $(LIBS) $(DBG)
@@ -25,4 +28,4 @@ clean:
 	$(MAKE) clean -C ./libft
 	rm -rf $(COMPILED_OBJS)
 
-re: fclean $(NAME)
+re: fclean clean

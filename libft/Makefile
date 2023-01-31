@@ -6,7 +6,7 @@
 #    By: jahernan <jahernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/21 17:18:21 by jahernan          #+#    #+#              #
-#    Updated: 2023/01/30 20:13:35 by jahernan         ###   ########.fr        #
+#    Updated: 2023/01/31 13:32:35 by jahernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC := \
 	ft_isspace.c \
 	ft_min.c \
 	ft_strcpy_range.c \
-	ft_strlen.c 
+	ft_strlen.c \
+	ft_strncmp.c
 			
 SRC := $(addprefix src/,$(SRC))
 
