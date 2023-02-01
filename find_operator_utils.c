@@ -6,41 +6,29 @@
 /*   By: jahernan <jahernan@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:59:31 by jahernan          #+#    #+#             */
-/*   Updated: 2023/02/01 12:03:55 by jahernan         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:13:04 by jahernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-void	ft_skip_slash(char *cmd, int *idx)
-{
-	if (cmd[*idx] != '\\')
-		return ;
-	if (cmd[*idx + 1] == '\0')
-		*idx += 1;
-	else
-		*idx += 2;
-}
-
 void	ft_skip_other_tk(char *cmd, int *idx, char find)
 {
 	int	i;
 
-	i = *idx + 1;
-	while (cmd[i] != '\0' && cmd[i] != find)
+	i = *idx - 1;
+	while (i > 0)
 	{
-		if (cmd[i] == '\\')
-			ft_skip_slash(cmd, &i);
+		if (cmd[i] == find && cmd[i - 1] == '\\')
+			i--;
+		else if (cmd[i] == find)
+			break ;
 		else
-			i++;
+			i--;
 	}
-	if (cmd[i] == '\0')
-	{
-		*idx = i;
-		printf("No ending token was found for %c\n", find);
-		return ;
-	}
-	*idx = i + 1;
+	if (i == 0 && cmd[i] != find)
+		printf("No matching token was found for %c\n", find);
+	*idx = i - 1;
 }
 
 void	ft_count_next_par(char *cmd, int *idx, int *pars_cnt)
@@ -48,20 +36,25 @@ void	ft_count_next_par(char *cmd, int *idx, int *pars_cnt)
 	int	i;
 
 	i = *idx;
-	while (cmd[i] != '(' && cmd[i] != ')' && cmd[i] != '\0')
+	while (i > 0)
 	{
-		if (cmd[i] == '\\')
-			ft_skip_slash(cmd, &i);
+		if (cmd[i] == '(' || cmd[i] == ')')
+		{
+			if (cmd[i - 1] == '\\')
+				i--;
+			else
+				break ;
+		}
 		else if (cmd[i] == '\'' || cmd[i] == '"')
 			ft_skip_other_tk(cmd, &i, cmd[i]);
 		else
-			i++;
+			i--;
 	}
 	if (cmd[i] == '(')
-		(*pars_cnt)++;
-	if (cmd[i] == ')')
 		(*pars_cnt)--;
-	*idx = i;
+	else if (cmd[i] == ')')
+		(*pars_cnt)++;
+	*idx = i - 1;
 }
 
 void	ft_skip_par(char *cmd, int *idx)
@@ -70,26 +63,24 @@ void	ft_skip_par(char *cmd, int *idx)
 	int	pars_cnt;	
 
 	i = *idx;
-	if (cmd[i] != '(')
+	if (cmd[i] != ')')
 		return ;
-	i++;
+	i--;
 	pars_cnt = 1;
-	while (1)
+	while (i >= 0)
 	{
 		ft_count_next_par(cmd, &i, &pars_cnt);
 		if (pars_cnt == 0)
-		{
-			i++;
 			break ;
-		}
-		if (cmd[i] == '\0' && pars_cnt != 0)
-		{
-			printf("Parenthesis mismatch!\n");
-			return ;
-		}
-		i++;
 	}
+	if (pars_cnt != 0)
+		printf("Parenthesis mismatch!\n");
 	*idx = i;
+}
+
+int	ft_is_token(char c)
+{
+	return (c == '(' || c == ')' || c == '\'' || c == '"');
 }
 
 void	ft_skip_token(char *cmd, int *idx)
@@ -97,10 +88,8 @@ void	ft_skip_token(char *cmd, int *idx)
 	char	tk;
 
 	tk = cmd[*idx];
-	if (tk == '\\')
-		ft_skip_slash(cmd, idx);
-	else if (tk == '(')
+	if (tk == ')')
 		ft_skip_par(cmd, idx);
-	else if (tk == '\'' || tk == '"')
+	else
 		ft_skip_other_tk(cmd, idx, tk);
 }

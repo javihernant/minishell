@@ -28,4 +28,4 @@ clean:
 	$(MAKE) clean -C ./libft
 	rm -rf $(COMPILED_OBJS)
 
-re: fclean clean
+re: fclean all
