@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atalaver <atalaver@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/20 13:48:42 by jahernan          #+#    #+#             */
-/*   Updated: 2023/03/27 17:22:53 by atalaver         ###   ########.fr       */
+/*   Created: 2023/03/27 11:18:10 by atalaver          #+#    #+#             */
+/*   Updated: 2023/03/27 11:18:49 by atalaver         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "../include/libft.h"
 
-# include <sys/types.h>
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	int	i;
+	int	res;
 
-char	*ft_strcpy_range(char *str, int i, int j);
-int		ft_isspace(char c);
-int		ft_strlen(char *str);
-int		ft_min(int a, int b);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	**ft_split(char const *s, char c);
-#endif
+	i = 0;
+	res = 0;
+	if (n == 0)
+		return (0);
+	while (!res && (s1[i] != '\0' || s2[i] != '\0') && i != (int)n)
+	{
+		res = (unsigned char)s1[i] - (unsigned char)s2[i];
+		if (!res)
+			i++;
+	}
+	if (i < (int)n)
+	{
+		res = (unsigned char)s1[i] - (unsigned char)s2[i];
+	}
+	return (res);
+}

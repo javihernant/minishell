@@ -1,9 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tree_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atalaver <atalaver@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 11:23:54 by atalaver          #+#    #+#             */
+/*   Updated: 2023/03/27 17:26:51 by atalaver         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "types.h"
-#include "libft.h"
-#include "shell_utils.h"
 
 //TODO: (")")
 //(()ignore)
@@ -13,7 +20,7 @@
 //prog "(" && ( a && b)
 //("\)") && b
 
-int	ft_tree_type(char *cmd, int op_idx)
+static int	ft_tree_type(char *cmd, int op_idx)
 {
 	if (op_idx == -1)
 		return (T_LEAF);
@@ -66,33 +73,49 @@ t_cmdtree	*ft_build_cmdtree(char *cmd_ln)
 	return (tree);
 }
 
-void	ft_exec_cmdtree(t_cmdtree *tree)
+/**
+ * TODO: Execute commands of the tree
+ * @param tree Tree with the commands and operators
+ * */
+void	ft_exec_cmdtree(t_cmdtree *tree, char *path)
 {
 	if (tree->type == T_LEAF)
 	{
 		printf("%s\n", tree->cmd);
+		tree->rc = 1;
 	}
 	else
 	{
-		printf("%s\n", tree->cmd);
-		ft_exec_cmdtree(tree->left);
-		ft_exec_cmdtree(tree->right);
+		if (tree->type == T_AND)
+		{
+			ft_exec_cmdtree(tree->left, path);
+			if (tree->left->rc)
+				ft_exec_cmdtree(tree->right, path);
+		}
+		else if (tree->type == T_OR)
+		{
+			ft_exec_cmdtree(tree->left, path);
+			if (!tree->left->rc)
+				ft_exec_cmdtree(tree->right, path);
+		}
+		if (tree->left->rc || tree->right->rc)
+			tree->rc = 1;
+		else
+			tree->rc = 0;
+	}
+}
+
+/**
+ * TODO: Free tree
+ * @param tree Tree with the commands and operators
+ * */
+void	ft_free_cmdtree(t_cmdtree *tree)
+{
+	if (tree->type != T_LEAF)
+	{
+		ft_free_cmdtree(tree->left);
+		ft_free_cmdtree(tree->right);
 	}
 	free(tree->cmd);
 	free(tree);
-}
-
-int	main()
-{
-	char		*command_ln;
-	t_cmdtree	*tree;
-	while (1)
-	{
-		printf(">");
-		command_ln = readline(NULL);
-		tree = ft_build_cmdtree(command_ln);
-		ft_exec_cmdtree(tree);
-		//ft_free_cmdtree(&tree);
-	}
-	return (0);
 }

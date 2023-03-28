@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   clean_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jahernan <jahernan@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: atalaver <atalaver@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:25:59 by jahernan          #+#    #+#             */
-/*   Updated: 2023/02/01 11:34:41 by jahernan         ###   ########.fr       */
+/*   Updated: 2023/03/27 13:41:21 by atalaver         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "clean_cmd.h"
 #include "libft.h"
 
-static int	ft_cnt_open_par(char *cmd_ln)
+/**
+ * TODO: Count all redundant parentheses
+ * @param cmd_ln Command text
+ * @return Number of redundant parentheses
+ * */
+static int	ft_cnt_redundant_bars(char *cmd_ln)
 {
 	int	open_cnt;
-	int		i;
+	int	i;
 
 	i = 0;
 	open_cnt = 0;
@@ -28,8 +33,9 @@ static int	ft_cnt_open_par(char *cmd_ln)
 		}
 		if (cmd_ln[i] == '(')
 		{
+			if (ft_is_redundant_bar(cmd_ln, i, open_cnt))
+				open_cnt++;
 			i++;
-			open_cnt++;
 		}
 		else
 			break ;
@@ -37,6 +43,13 @@ static int	ft_cnt_open_par(char *cmd_ln)
 	return (open_cnt);
 }
 
+/**
+ * !: Deprecated
+ * *: Only count right side
+ * TODO: Count close bars
+ * @param cmd_ln Command text
+ * @return Number of close bars
+ * 
 static int	ft_cnt_close_par(char *cmd_ln)
 {
 	int	i;
@@ -60,7 +73,14 @@ static int	ft_cnt_close_par(char *cmd_ln)
 	}
 	return (close_cnt);
 }
+*/
 
+/**
+ * !: Deprecated
+ * TODO: Count redundant bars
+ * @param cmd_ln Command text
+ * @return Min number of bars found
+ * 
 int	ft_cnt_redundant_pars(char *cmd_ln)
 {
 	int	open_cnt;
@@ -70,6 +90,7 @@ int	ft_cnt_redundant_pars(char *cmd_ln)
 	close_cnt = ft_cnt_close_par(cmd_ln);
 	return (ft_min(open_cnt, close_cnt));
 }
+*/
 
 char	*ft_rm_pars(char *cmd_ln, int pars_cnt)
 {
@@ -81,13 +102,18 @@ char	*ft_rm_pars(char *cmd_ln, int pars_cnt)
 	return (ft_strcpy_range(cmd_ln, i, j));
 }
 
-/* Returns a newly allocated string that contains no redundant parentheses. (i.e `((a && b))` would become `a && b`. `((a && b) && c)` to `(a && b) && c` */
+/**
+ * TODO: Remove redundant parentheses
+ * @param cmd_ln Command text
+ * @return A newly allocated string that contains no redundant parentheses.
+ * (i.e `((a && b))` would become `a && b`. `((a && b) && c)` to `(a && b) && c`
+ * */
 char	*ft_cpy_cmd_clean(char *cmd_ln)
 {
 	int		pars_cnt;
 	char	*str;
 
-	pars_cnt = ft_cnt_redundant_pars(cmd_ln);
+	pars_cnt = ft_cnt_redundant_bars(cmd_ln);
 	str = ft_rm_pars(cmd_ln, pars_cnt);
 	return (str);
 }

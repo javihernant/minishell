@@ -1,0 +1,12 @@
+- [x] Arreglado problema de Makefile (ft_strncmp.c, no estaba por lo que lo añadi).
+- [x] He creado el recorrido del arbol para ejecutar los comandos.
+- [ ] Crear una funcion para que sepa leer cada cada comando y ejecutar la funcion de cada una.
+	- [ ] En esa funcion que sepa diferenciar el comando de las redirecciones.
+	- [ ] Que diferencie y ejecute las pipes.
+- [ ] Crear funcion que reemplace variables por sus valores y contemple el wildcard *.
+- [x] He arreglado el problema del filtro de redundancia.
+- [ ] Ver que hacer con el codigo que se ha quedado sin usar en clean_cmd.c y en otros .c
+- [x] He implementado el uso de los CTRL.
+- [ ] Comprobar que el uso de los CTRL sea como en el otriginal 100%.
+- [ ] Crear sistema de historial funcional.
+- [ ] Crear los diferentes comandos.
